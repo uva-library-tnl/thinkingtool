@@ -1,0 +1,7 @@
+.flex-center {
+  justify-content: center;
+}
+
+.tile .panel-block .control:first-of-type {
+  flex: 2;
+}

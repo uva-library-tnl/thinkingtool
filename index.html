@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="bulma.min.css">
+  <link rel="stylesheet" href="style.css">
+  <title>UVA Library Online Thinking Tool</title>
+</head>
+<body>
+  <header>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand" id="logo">UVA Thinking Tool</div>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <a href="https://library.virginia.edu">Library Home</a>
+          <a href="#">Ask a Librarian</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">Thinking Tool</h1>
+          <h2 class="subtitle">The Thinking Tool provides a template for focusing a research assignment through the brainstorming of ideas, keywords, and other terminology related to a topic.  The objective is the generation of searchable keywords that may be used to gather resources.</h2>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="tile is-ancestor">
+        <section class="tile is-parent">
+          <div class="tile is-child box">
+            <p class="title">Step 1</p>
+            <p class="subtitle">What is your assignment?</p>
+            <div class="content">
+              <p>How long is your paper? How many sources do you need? What kind?</p>
+              <textarea class="textarea" name="tt1" id="tt1" placeholder="Summarize the overall goal of your assignment here"></textarea>
+            </div>
+          </div>
+        </section>
+        <section class="tile is-parent">
+          <div class="tile is-child box">
+            <p class="title">Step 2</p>
+            <p class="subtitle">What do you want to write about?</p>
+            <div class="content">
+              <p>This doesn't have to be your final choice of topic. It's a place to start.</p>
+              <input class="input" name="tt2" id="tt2" cols="30" rows="10" placeholder="Briefly summarize your main idea"></input>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+    <section class="container">
+      <div class="tile is-ancestor">
+        <div class="tile is-parent">
+          <div class="tile is-child box">
+            <p class="title">Step 3</p>
+            <p class="subtitle">Build a Concept Cloud</p>
+            <div class="content">
+              <p>Write down anything related to your main idea. Anything and everything! (Use <a href="https://wikipedia.org" target="_blank">Wikipedia</a> for help)</p>
+              <div class="tile is-parent">
+                <div class="tile is-child panel has-text-centered">
+                  <p class="panel-heading">Your Main Idea</p>
+                  <div class="panel-block flex-center">
+                    <p id="mainidea" class="title pb-5"></p>
+                  </div>
+                </div>
+              </div>
+              <div class="tile">
+                <div class="tile is-parent">
+                  <div class="tile is-child panel">
+                    <p class="panel-heading">Synonyms</p>
+                    <div class="panel-block">
+                      <p>List words similar to those in your main idea.  Think of words that experts use or about related topics</p>
+                    </div>
+                    <div class="panel-block">
+                      <div class="field has-addons">
+                        <div class="control">
+                          <input type="text" class="input" placeholder="Enter a word or phrase to add">
+                        </div>
+                        <div class="control">
+                          <a class="button is-info">Add</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tile is-parent">
+                  <div class="tile is-child panel">
+                    <p class="panel-heading">People</p>
+                    <div class="panel-block">
+                      <p>List the people who are involved.  Think about the kinds of people or larger groups/organizations.</p>
+                    </div>
+                    <div class="panel-block">
+                      <div class="field has-addons">
+                        <div class="control">
+                          <input type="text" class="input" placeholder="Enter a word or phrase to add">
+                        </div>
+                        <div class="control">
+                          <a class="button is-info">Add</a>
+                        </div>
+                      </div>
+                    </div>  
+                  </div>
+                </div>
+              </div>
+                <div class="columns is-desktop">
+                  <div class="column is-one-third">
+                    Places?
+                  </div>
+                  <div class="column is-one-third is-offset-one-third">
+                    Dates?
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="container">
+      <div class="tile is-ancestor">
+        <div class="tile is-parent">
+          <div class="tile is-child box">
+            <p class="title">Step 4</p>
+            <p class="subtitle">Narrow Your Search Terms</p>
+            <div class="content">
+              <p>Choose 2 to 4 keywords from Step #3 to start the search process. <em>Remember: Add or subtract keywords to get different results. You may find that you need to start over with a new main idea.</em></p>
+              <div class="answer">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="jquery.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <script src="scripts.js"></script>
+</body>
+</html>
