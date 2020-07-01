@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="bulma.min.css">
+  <link rel="stylesheet" href="animate.min.css">
   <link rel="stylesheet" href="style.css">
   <title>UVA Library Online Thinking Tool</title>
 </head>
@@ -163,8 +164,8 @@
             <p class="subtitle">Narrow Your Search Terms</p>
             <div class="content">
               <p>Choose <strong>2 to 4</strong> keywords from the Concept Cloud in Step 3 to start the search process. <em>Remember: When searching, add and subtract keywords then note how your results differ. You may even find that you need to start over with a new main idea.</em></p>
-              <div class="answer">
-                
+              <div class="field is-grouped is-grouped-multiline" id="searchterms">
+ 
               </div>
             </div>
           </div>
@@ -228,18 +229,49 @@
       </footer>
     </div>
   </div>
+  <div class="modal" id="removeitem-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Remove Item?</p>
+      </header>
+      <section class="modal-card-body">
+        <div class="message is-warning">
+          <p class="message-body">Are you sure you want to remove this item?</p>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-danger" id="removeitem-conf" data-caller="">Remove</button>
+        <button class="button" id="removeitem-cancel">Cancel</button>
+      </footer>
+    </div>
+  </div>
   <template id="cloud-item">
-    <div class='panel-block list-item is-active is-fullwidth'>
+    <div class='panel-block list-item is-active is-fullwidth' id="">
       <a class='is-active'>
-        <span class='panel-icon'>
-          <i class='fas fa-trash-alt' aria-hidden='true'></i>
-        </span>
         <span class='list-item-data'></span>
       </a>
+      <div class="buttons">
+        <button class='button is-success is-pulled-right'>
+          <i class='fas fa-plus-circle' aria-hidden='true'></i>
+        </button>
+        <button class='button is-danger is-pulled-right'>
+          <i class='fas fa-trash-alt' aria-hidden='true'></i>
+        </button>
+      </div>
+    </div>
+  </template>
+  <template id="searchterm">
+    <div class="control">
+      <div class="tags has-addons are-large">
+        <span class="tag is-black"></span>
+        <a class="tag is-delete"></a>
+      </div>
     </div>
   </template>
   <script src="jquery.min.js"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <script src="bulma-toast.min.js"></script>
   <script src="scripts.js"></script>
 </body>
 </html>
