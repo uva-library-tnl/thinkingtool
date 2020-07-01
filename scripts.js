@@ -40,6 +40,12 @@ let initApp = () => {
       addToList("dates", s);
     })
   }
+  let terms = getFromStorage("searchterms");
+  if (terms) {
+    terms.map((s) => {
+      addToSearchTerms(s);
+    })
+  }
 }
 
 let closeStartOverModal = () => {
@@ -47,9 +53,18 @@ let closeStartOverModal = () => {
   $("#startover-modal").removeClass("is-active");
 }
 
+let closeRemoveItemModal = () => {
+  $("html").removeClass("is-clipped");
+  $("#removeitem-modal").removeClass("is-active");
+  $("#removeitem-conf").data("caller", "");
+
+}
+
 let createListItem = (data) => {
   let template = document.querySelector("#cloud-item").content.cloneNode(true);
+  let div = template.querySelector(".panel-block");
   let item = template.querySelector(".list-item-data");
+  div.id = "a" + Date.now();
   item.textContent = data;
   return template;
 }
@@ -69,6 +84,28 @@ let updateList = (obj) => {
   });
 
   saveToStorage(obj, items);
+}
+
+let updateTerms = () => {
+  let items = [];
+  $(".tags span.is-black").each(function() {
+    items.push($(this).text());
+  });
+
+  saveToStorage("searchterms", items);
+}
+
+let createSearchTerm = (data) => {
+  let template = document.querySelector("#searchterm").content.cloneNode(true);
+  let tag = template.querySelector("span");
+  tag.textContent = data;
+  return template;
+}
+
+let addToSearchTerms = (data) => {
+  let template = createSearchTerm(data);
+  $("#searchterms").append(template);
+  updateTerms();
 }
 
 $(document).ready(function() {
@@ -141,12 +178,42 @@ $(document).ready(function() {
   /**
    * Allows removal of an item once added
    */
-  $(".panel-block.is-active").on('click', function(e) {
-    e.preventDefault();
-    if (confirm("Do you want to remove this item?")) {
-      let parent = $(this).parents('.panel').attr('id');
-      $(this).remove();
-      updateList(parent);
+  $(".panel-block.is-active button.is-danger").on('click', function() {
+    $("#removeitem-modal").addClass("is-active");
+    $("#removeitem-conf").attr("data-caller", $(this).closest('.panel-block').attr('id'));
+    $("html").addClass("is-clipped");
+  });
+
+  $("#removeitem-conf").on('click', function() {
+    let id = $(this).data('caller');
+    let panelBlock = $("#" + id);
+    let parent = $(panelBlock).parents('.panel').attr('id');
+    $(panelBlock).remove();
+    updateList(parent);
+    closeRemoveItemModal();
+  });
+
+  $("#removeitem-cancel").on('click', function() {
+    closeRemoveItemModal();
+  });
+
+  $(".panel-block.is-active button.is-success").on('click', function() {
+    let data = $(this).closest('.panel-block').find('.list-item-data').text();
+    if ($('#searchterms .tags').length <= 3) {
+      addToSearchTerms(data);
+    } else {
+      bulmaToast.toast({ 
+        message: "Try removing some search terms first.", 
+        type: "is-danger",
+        duration: 3000,
+        position: "center",
+        animate: { in: 'fadeIn', out: 'fadeOut' }
+      });
     }
-  })
+  });
+
+  $(".tags a.is-delete").on('click', function() {
+    $(this).closest('.control').remove();
+    updateTerms();
+  });
 });
