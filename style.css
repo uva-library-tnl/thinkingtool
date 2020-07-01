@@ -6,7 +6,8 @@
   flex: 1;
 }
 
-.field.has-addons .control:first-of-type {
+.field.has-addons .control:first-of-type,
+.panel-block .is-active {
   flex: 8;
 }
 
