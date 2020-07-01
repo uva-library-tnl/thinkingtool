@@ -141,7 +141,8 @@ $(document).ready(function() {
   $("#startover-conf").on('click', function() {
     window.localStorage.clear();
     closeStartOverModal();
-    location.reload();
+    (async function() { window.scrollTo(0,0) })()
+    .then(() => location.href = "");
   });
 
   /**
