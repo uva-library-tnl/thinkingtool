@@ -16,28 +16,28 @@ let initApp = () => {
   $("#mainidea").text(function () {
     return getFromStorage("tt2") || "Enter your main idea in Step 2 above";
   });
-  let synonyms = getFromStorage("synonyms");
+  let synonyms = getFromStorage("synonymtags");
   if (synonyms) {
     synonyms.map((s) => {
-      addToList("synonyms", s);
+      addToList("synonymtags", s);
     })
   }
-  let people = getFromStorage("people");
+  let people = getFromStorage("peopletags");
   if (people) {
     people.map((s) => {
-      addToList("people", s);
+      addToList("peopletags", s);
     })
   }
-  let places = getFromStorage("places");
+  let places = getFromStorage("placetags");
   if (places) {
     places.map((s) => {
-      addToList("places", s);
+      addToList("placetags", s);
     })
   }
-  let dates = getFromStorage("dates");
+  let dates = getFromStorage("datetags");
   if (dates) {
     dates.map((s) => {
-      addToList("dates", s);
+      addToList("datetags", s);
     })
   }
   let terms = getFromStorage("searchterms");
@@ -62,7 +62,7 @@ let closeRemoveItemModal = () => {
 
 let createListItem = (data) => {
   let template = document.querySelector("#cloud-item").content.cloneNode(true);
-  let div = template.querySelector(".panel-block");
+  let div = template.querySelector(".control");
   let item = template.querySelector(".list-item-data");
   div.id = "a" + Date.now();
   item.textContent = data;
@@ -156,39 +156,68 @@ $(document).ready(function() {
    * add to the corresponding space below it.
    */
   $("#synonyms input").on('change', function() {
-    addToList("synonyms", $(this).val());
+    let pieces = $(this).val().split(",");
+    if (pieces.length > 2) {
+      pieces.map( (p) => {
+        addToList("synonymtags", p.trim());
+      })
+    } else {
+      addToList("synonymtags", $(this).val());
+    }
     $(this).val("");
   });
 
   $("#people input").on('change', function() {
-    addToList("people", $(this).val());
+    let pieces = $(this).val().split(",");
+    if (pieces.length > 2) {
+      pieces.map( (p) => {
+        addToList("peopletags", p.trim());
+      })
+    } else {
+      addToList("peopletags", $(this).val());
+    }
     $(this).val("");
   });
 
   $("#places input").on('change', function() {
-    addToList("places", $(this).val());
+    let pieces = $(this).val().split(",");
+    if (pieces.length > 2) {
+      pieces.map( (p) => {
+        addToList("placetags", p.trim());
+      })
+    } else {
+      addToList("placetags", $(this).val());
+    }
     $(this).val("");
   });
 
   $("#dates input").on('change', function() {
-    addToList("dates", $(this).val());
+    let pieces = $(this).val().split(",");
+    if (pieces.length > 2) {
+      pieces.map( (p) => {
+        addToList("datetags", p.trim());
+      })
+    } else {
+      addToList("datetags", $(this).val());
+    }
     $(this).val("");
   });
 
   /**
-   * Allows removal of an item once added
+   * Allows removal of an item once added.
+   * Modals used to confirm deletion.
    */
-  $(".panel-block.is-active button.is-danger").on('click', function() {
-    $("#removeitem-modal").addClass("is-active");
-    $("#removeitem-conf").attr("data-caller", $(this).closest('.panel-block').attr('id'));
+  $(".tt-tags").on('click', '.is-delete', function() {
+    $("#removeitem-conf").attr("data-caller", $(this).closest('.control').attr('id'));
     $("html").addClass("is-clipped");
+    $("#removeitem-modal").addClass("is-active");
   });
 
   $("#removeitem-conf").on('click', function() {
-    let id = $(this).data('caller');
-    let panelBlock = $("#" + id);
-    let parent = $(panelBlock).parents('.panel').attr('id');
-    $(panelBlock).remove();
+    let id = $(this).attr('data-caller');
+    let tagGroup = $("#" + id);
+    let parent = $(tagGroup).closest('.tt-tags').attr('id');
+    $(tagGroup).remove();
     updateList(parent);
     closeRemoveItemModal();
   });
@@ -197,8 +226,12 @@ $(document).ready(function() {
     closeRemoveItemModal();
   });
 
-  $(".panel-block.is-active button.is-success").on('click', function() {
-    let data = $(this).closest('.panel-block').find('.list-item-data').text();
+  /**
+   * Add brainstorm items to search terms when clicked.
+   * n.b. Only 4 total can be added
+   */
+  $(".tt-tags").on('click', '.list-item-data', function() {
+    let data = $(this).text();
     if ($('#searchterms .tags').length <= 3) {
       addToSearchTerms(data);
     } else {
@@ -212,8 +245,68 @@ $(document).ready(function() {
     }
   });
 
-  $(".tags a.is-delete").on('click', function() {
+  /**
+   * Remove search terms when delete button clicked
+   */
+  $("#searchterms").on('click', ".tags a.is-delete", function() {
     $(this).closest('.control').remove();
     updateTerms();
+  });
+
+  /**
+   * Toggle menu on mobile when hamburger clicked
+   */
+  $(".navbar-burger").on('click', function() {
+    $(".navbar-menu").toggle();
+  });
+
+  /**
+   * Stop user from completing Step 2 prior to 1 being finished.
+   */
+  $("#tt2").on('focus', function() {
+    if ($("#tt1").val()) {
+      return;
+    } else {
+      bulmaToast.toast({ 
+        message: "Step 1 should be completed before addressing the main idea.", 
+        type: "is-danger",
+        duration: 3000,
+        position: "center",
+        animate: { in: 'fadeIn', out: 'fadeOut' }
+      });
+      $(this).blur();
+    }
+  });
+
+  /**
+   * Stop user from completing Step 3 prior to 1 & 2 being finished.
+   */
+  $(".panel-block input").on('focus', function() {
+    let steps12Complete = ($("#tt1").val() && $("#tt2").val());
+    if (steps12Complete) {
+      return;
+    } else {
+      bulmaToast.toast({ 
+        message: "Both Steps 1 and 2 should be completed before filling out the concept cloud.", 
+        type: "is-danger",
+        duration: 3000,
+        position: "center",
+        animate: { in: 'fadeIn', out: 'fadeOut' }
+      });
+      $(this).blur();
+    }
+  });
+
+  /**
+   * TODO: get PDF to work
+   */
+  $("#savepdf").on('click', function() {
+    // let doc = new jsPDF();
+
+    // doc.html(document.body, {
+    //   callback: function (doc) {
+    //     doc.save();
+    //   }
+    // });
   });
 });

@@ -20,3 +20,19 @@
   width: 100%;
   min-height: 20px;
 }
+
+.list-item-data {
+  cursor: pointer;
+}
+
+.list-item-data:hover {
+  background-color: #363636df !important;
+}
+
+.list-item-data:active {
+  background-color: green !important;
+}
+
+.is-delete:active {
+  background-color: red !important;
+}
