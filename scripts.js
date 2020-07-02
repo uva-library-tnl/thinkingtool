@@ -302,12 +302,8 @@ $(document).ready(function() {
    * TODO: get PDF to work
    */
   $("#savepdf").on('click', function() {
-    // let doc = new jsPDF();
-
-    // doc.html(document.body, {
-    //   callback: function (doc) {
-    //     doc.save();
-    //   }
+		// html2canvas(document.body).then(canvas => {
+    //   document.body.appendChild(canvas);
     // });
   });
 });
