@@ -217,23 +217,23 @@ let createPDF = () => {
     jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
   };
   
-  if (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase())) {
-    html2pdf()
-    .set(opt)
-    .then(() => {
-      $('#pdf').show();
-    })
-    .from(element)
-    .outputPdf('datauristring')
-    .then(uri => {
-      let file = new Blob([uri], {type:"application/pdf"});
-      let url = URL.createObjectURL(file);
-      let a = $("main").append(`<a href="${url}" download="thinkingtool.pdf">Download PDF</a>`)
-    })
-    .then(() => {
-      $('#pdf').hide();
-    })
-  } else {
+  // if (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase())) {
+  //   html2pdf()
+  //   .set(opt)
+  //   .then(() => {
+  //     $('#pdf').show();
+  //   })
+  //   .from(element)
+  //   .outputPdf('datauristring')
+  //   .then(uri => {
+  //     let file = new Blob([uri], {type:"application/pdf"});
+  //     let url = URL.createObjectURL(file);
+  //     let a = $("main").append(`<a href="${url}" download="thinkingtool.pdf">Download PDF</a>`)
+  //   })
+  //   .then(() => {
+  //     $('#pdf').hide();
+  //   })
+  // } else {
     html2pdf()
     .set(opt)
     .then(() => {
@@ -244,7 +244,7 @@ let createPDF = () => {
     .then(() => {
       $('#pdf').hide();
     });
-  }
+  // }
 }
 
 let closePDFInfoModal = () => {
