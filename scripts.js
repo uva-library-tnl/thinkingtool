@@ -223,6 +223,7 @@ let createPDF = () => {
     $('#pdf').show();
   })
   .from(element)
+  .toPdf()
   .save()
   .then(() => {
     $('#pdf').hide();
