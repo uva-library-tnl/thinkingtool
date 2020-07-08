@@ -223,8 +223,7 @@ let createPDF = () => {
     $('#pdf').show();
   })
   .from(element)
-  .toPdf()
-  .save()
+  .save('thinkingtool.pdf')
   .then(() => {
     $('#pdf').hide();
   });
