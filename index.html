@@ -23,6 +23,7 @@
         <div class="navbar-end">
           <a class="navbar-item" href="https://library.virginia.edu" target="_blank">Library Home</a>
           <a class="navbar-item" href="https://www.library.virginia.edu/askalibrarian" target="_blank">Ask a Librarian</a>
+          <a href="https://static.lib.virginia.edu/uvalibappfiles/learning-resource/UVA_Thinking_Tool-Choosing_a_Topic_and_Search_Terms_-_Conference_Materials.pdf" target="_blank" class="navbar-item">Printable Version</a>
         </div>
       </div>
     </nav>
@@ -55,12 +56,22 @@
           </div>
         </section>
         <section class="tile is-parent">
-          <div class="tile is-child box">
+          <div class="tile is-child box" id="mainideas">
             <p class="title">Step 2</p>
-            <p class="subtitle">What do you want to write about?</p>
+            <p class="subtitle">Brainstorm what you want to write about</p>
             <div class="content">
-              <p>This doesn't have to be your final choice of topic. It's a place to start.</p>
-              <input class="input" name="tt2" id="tt2" cols="30" rows="10" placeholder="Briefly summarize your main idea"></input>
+              <p>Enter a variety of possible topics as a place to start.</p>
+              <div class="field has-addons">
+                <div class="control">
+                  <input type="text" class="input" id="tt2" placeholder="Enter a word or phrase to add">
+                </div>
+                <div class="control">
+                  <a class="button is-info" id="add-mi">Add</a>
+                </div>
+              </div>
+              <div class="mi-tags field is-grouped is-grouped-multiline" id="mainideatags">
+ 
+              </div>        
             </div>
           </div>
         </section>
@@ -73,12 +84,12 @@
             <p class="title">Step 3</p>
             <p class="subtitle">Build a Concept Cloud</p>
             <div class="content">
-              <p>Type in anything related to your main idea. Anything and everything! (Use <a href="https://wikipedia.org" target="_blank">Wikipedia</a> for help)</p>
+              <p>Enter things related to your main idea. Anything and everything! (Use <a href="https://wikipedia.org" target="_blank">Wikipedia</a> for help)</p>
               <div class="tile is-parent">
                 <div class="tile is-child panel has-text-centered">
                   <p class="panel-heading">Your Main Idea</p>
                   <div class="panel-block flex-center">
-                    <p id="mainidea" class="title pb-5"></p>
+                    <p id="mainidea" class="title pb-5" data-origid=""></p>
                   </div>
                 </div>
               </div>
@@ -296,6 +307,33 @@
       </footer>
     </div>
   </div>
+  <div class="modal" id="pdfinfo-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">PDF Document Information</p>
+      </header>
+      <section class="modal-card-body">
+        <h2>Please enter the following information:</h2>
+        <div class="field">
+          <label class="label">Name</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="What is your name?" id="studentnamefield">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Course</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="What course is this for?" id="coursenamefield">
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success" id="pdfinfo-conf">Create PDF</button>
+        <button class="button" id="pdfinfo-cancel">Cancel</button>
+      </footer>
+    </div>
+  </div>
   <template id="cloud-item">
     <div class="control" id="">
       <div class="tags has-addons are-medium">
@@ -312,11 +350,79 @@
       </div>
     </div>
   </template>
+  <div id="pdf">
+    <div class="pdfrow" id="pdfinfo">
+      <div><b>Name:</b> <span id="studentname"></span></div>
+      <div><b>Course:</b> <span id="coursename"></span></div>
+    </div>
+    <h1>Thinking Tool: Choosing a Topic and Search Terms</h1>
+    <div class="pdfrow">
+      <div id="pdf1" class="pdfblock">
+        <h1>1</h1>
+        <div>
+          <h2>What is your assignment?</h2>
+          <div class="pdfinsert"></div>
+        </div>
+        <p>How long is your paper? How many sources do you need? What kind?</p>
+      </div>
+      <div id="pdf2" class="pdfblock">
+        <h1>2</h1>
+        <div>
+          <h2>What do you want to write about?</h2>
+          <div class="pdfinsert tags"></div>
+        </div>
+        <p>This doesn't have to be your final choice of topic. It's a place to start.</p>
+      </div>
+    </div>
+    <div id="pdf3" class="pdfblock">
+      <h1>3</h1>
+      <div>
+        <header>
+          <h2>Concept Cloud</h2>
+          <p>Write down anything related to your main idea. Anything! Everything! (Use Wikipedia for help here).</p>
+        </header>
+        <div class="pdfrow">
+          <div id="pdf-synonyms" class="pdfblock">
+            <h3>Synonyms? Words experts use? Related topics?</h3>
+            <div class="pdfinsert tags"></div>
+          </div>
+          <div id="pdf-people" class="pdfblock">
+            <h3>People? Kinds of people? Organizations?</h3>
+            <div class="pdfinsert tags"></div>
+          </div>
+        </div>
+        <div class="pdfrow">
+          <div id="pdf-mainidea" class="pdfblock">
+            <h3>Your Main Idea</h3>
+            <div class="pdfinsert"></div>
+          </div>
+        </div>
+        <div class="pdfrow">
+          <div id="pdf-places" class="pdfblock">
+            <h3>Places?</h3>
+            <div class="pdfinsert tags"></div>
+          </div>
+          <div id="pdf-dates" class="pdfblock">
+            <h3>Dates?</h3>
+            <div class="pdfinsert tags"></div>
+          </div>
+        </div>
+      </div>
+      <p>&nbsp;</p>
+    </div>
+    <div id="pdf4" class="pdfblock">
+      <h1>4</h1>
+      <div>
+        <h2>Your Search Terms</h2>
+        <div class="pdfinsert tags"></div>
+      </div>
+      <p>2-4 keywords from Box 3. Remember: Add or subtract keywords to get different results. Pick different ones! Start with a new main idea!</p>
+    </div>
+  </div>
   <script src="static/jquery.min.js"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
   <script src="static/bulma-toast.min.js"></script>
-  <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
-  <script src="static/jspdf.min.js"></script>
+  <script src="static/html2pdf.bundle.min.js"></script>
   <script src="scripts.js"></script>
 </body>
 </html>
