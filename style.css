@@ -30,7 +30,7 @@ html {
 }
 
 .list-item-data:hover {
-  background-color: #363636df !important;
+  /* background-color: #363636df !important; */
 }
 
 .list-item-data:active {
@@ -39,4 +39,123 @@ html {
 
 .is-delete:active {
   background-color: red !important;
+}
+
+.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  color: currentColor;
+  display: inline-block;  /* For IE11/ MS Edge bug */
+  pointer-events: none;
+}
+
+/*** PDF STYLES ***/
+#pdf {
+  margin: .25in;
+  font-size: 8pt;
+  display: none;
+}
+
+#pdfinfo {
+  margin-bottom: .1in;
+  padding-bottom: .1in;
+  border-bottom: 1px solid #000;
+}
+
+#pdf > h1 {
+  text-align: center;
+  font-size: 12pt;
+  font-weight: bold;
+  margin-bottom: .1in;
+}
+
+.pdfrow {
+  display: flex;
+  gap: .15in;
+}
+
+.pdfblock .pdfrow {
+  margin: 0 .15in;
+}
+
+.pdfblock .pdfrow .pdfblock {
+  margin: .15in 0;
+}
+
+.pdfblock .pdfrow .pdfblock > div {
+  min-height: 1.25in;
+}
+
+.pdfrow > div {
+  width: 100%;
+}
+
+#pdf3 header {
+  text-align: center;
+}
+
+.pdfblock {
+  margin: .1in 0;
+  position: relative;
+}
+
+.pdfblock h1 {
+  font-size: 36pt;
+  margin-top: -20px;
+  background-color: #fff;
+  padding: 0 .1in 0 0;
+  position: absolute;
+  left: -1px;
+}
+
+.pdfblock h2 {
+  font-weight: bold;
+  margin-top: .05in;
+  font-size: 12pt;
+}
+
+.pdfrow h3 {
+  font-weight: bold;
+}
+
+.pdfblock > p {
+  text-align: center;
+  margin-top: .05in;
+}
+
+.pdfblock > div {
+  border: 1px solid #000;
+  border-radius: .5em;
+  min-height: 1.5in;
+}
+
+#pdf-mainidea {
+  width: 50%;
+  margin: .15in auto;
+}
+
+#pdf .tags {
+  padding-top: .05in;
+}
+
+#pdf1 .pdfinsert {
+  padding-left: .5in;
+  font-size: 12pt;
+}
+
+#pdf3 .tags {
+  padding-left: .1in;
+  align-items: unset;
+}
+
+#pdf-mainidea .pdfinsert {
+  padding: .125in;
+}
+
+#pdf1 .tags, #pdf2 .tags, #pdf4 .tags {
+  margin-left: .5in;
+}
+
+#pdf1 h2, #pdf2 h2, #pdf4 h2 {
+  margin-left: .5in;
 }
