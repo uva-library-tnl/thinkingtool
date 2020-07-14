@@ -148,6 +148,16 @@ let enableTag = (obj) => {
   $(`#${obj} .tag`).removeClass('has-background-success-dark');
 }
 
+let prepPDF = () => {
+  let sn = getFromStorage("studentname");
+  let cn = getFromStorage("coursename");
+
+  $('#pdfinfo-modal').addClass("is-active");
+  $("html").addClass("is-clipped");
+  $('#studentnamefield').val(sn || "");
+  $('#coursenamefield').val(cn || "");
+}
+
 let createPDF = () => {
   let tt1 = getFromStorage("tt1");
   let tt2 = getFromStorage("mainideatags");
@@ -173,17 +183,8 @@ let createPDF = () => {
   let sn = getFromStorage("studentname");
   let cn = getFromStorage("coursename");
 
-  if (sn && cn) {
-    $('#studentname').text(sn);
-    $('#coursename').text(cn);
-  } else {
-    $('#pdfinfo-modal').addClass("is-active");
-    $("html").addClass("is-clipped");
-    $('#studentnamefield').val(sn || "");
-    $('#coursenamefield').val(cn || "");
-
-    return;
-  }
+  $('#studentname').text(sn || "");
+  $('#coursename').text(cn || "");
 
   $('#pdf1 .pdfinsert').html(tt1);
   $('#pdf2 .pdfinsert').html(tt2.map(mi => {
@@ -477,27 +478,17 @@ $(document).ready(function() {
   });
 
   $("#savepdf").on('click', function() {
-    createPDF();
+    prepPDF();
   });
 
   $('#pdfinfo-conf').on('click', function() {
     let sn = $('#studentnamefield').val();
     let cn = $('#coursenamefield').val();
 
-    if (sn && cn) {
-      saveToStorage("studentname", sn);
-      saveToStorage('coursename', cn);
-      closePDFInfoModal();
-      createPDF();
-    } else {
-      bulmaToast.toast({ 
-        message: "Please enter both your name and the course name/number", 
-        type: "is-danger",
-        duration: 3000,
-        position: "center",
-        animate: { in: 'fadeIn', out: 'fadeOut' }
-      });
-    }
+    saveToStorage("studentname", sn);
+    saveToStorage('coursename', cn);
+    closePDFInfoModal();
+    createPDF();
   });
 
   $('#pdfinfo-cancel').on('click', function() {
