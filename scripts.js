@@ -1,9 +1,10 @@
 const MI_PLACEHOLDER = "Choose your main idea from Step 2 above";
-var mainideatagscount = 0;
+// var mainideatagscount = 0;
 var synonymtagscount = 0;
 var peopletagscount = 0;
 var placetagscount = 0;
 var datetagscount = 0;
+var misctagscount = 0;
 
 let saveToStorage = (obj, data) => {
   window.localStorage.setItem(obj, JSON.stringify(data));
@@ -20,20 +21,21 @@ let initApp = () => {
   $("#tt2").val(function () {
     return getFromStorage("tt2") || null;
   });
-  let mainideas = getFromStorage("mainideatags");
-  if (mainideas) {
-    mainideas.map((s) => {
-      addToList("mainideatags", s);
-    })
-  }
-  let miObj = getFromStorage("mainidea") || null;
-  if (miObj) {
-    $("#mainidea").attr('data-origid', miObj.id);
-    $("#mainidea").text(miObj.text);
-    disableMITag($("#" + miObj.id + " .tag"));
-  } else {
-    $("#mainidea").text(MI_PLACEHOLDER);
-  }
+  // let mainideas = getFromStorage("mainideatags");
+  // if (mainideas) {
+  //   mainideas.map((s) => {
+  //     addToList("mainideatags", s);
+  //   })
+  // }
+  // let miObj = getFromStorage("mainidea") || null;
+  // if (miObj) {
+  //   $("#mainidea").attr('data-origid', miObj.id);
+  //   $("#mainidea").text(miObj.text);
+  //   disableMITag($("#" + miObj.id + " .tag"));
+  // } else {
+  //   $("#mainidea").text(MI_PLACEHOLDER);
+  // }
+  $("#mainidea").text(getFromStorage("tt2"));
   let synonyms = getFromStorage("synonymtags");
   if (synonyms) {
     synonyms.map((s) => {
@@ -56,6 +58,12 @@ let initApp = () => {
   if (dates) {
     dates.map((s) => {
       addToList("datetags", s);
+    })
+  }
+  let misc = getFromStorage("misctags");
+  if (misc) {
+    misc.map((s) => {
+      addToList("misctags", s);
     })
   }
   let terms = getFromStorage("searchterms");
@@ -129,13 +137,13 @@ let addToSearchTerms = (obj, data) => {
   updateTerms();
 }
 
-let disableMITag = (obj) => {
-  obj.closest('.is-grouped').find('.is-disabled').removeClass("is-disabled");
-  obj.closest('.is-grouped').find('.tag').removeClass('has-background-success-dark');
-  obj.addClass('has-background-success-dark');
-  obj.addClass('is-disabled');
-  obj.siblings().addClass("is-disabled");
-}
+// let disableMITag = (obj) => {
+//   obj.closest('.is-grouped').find('.is-disabled').removeClass("is-disabled");
+//   obj.closest('.is-grouped').find('.tag').removeClass('has-background-success-dark');
+//   obj.addClass('has-background-success-dark');
+//   obj.addClass('is-disabled');
+//   obj.siblings().addClass("is-disabled");
+// }
 
 let disableTag = (obj) => {
   obj.addClass('has-background-success-dark');
@@ -160,12 +168,14 @@ let prepPDF = () => {
 
 let createPDF = () => {
   let tt1 = getFromStorage("tt1");
-  let tt2 = getFromStorage("mainideatags");
-  let tt3_mi = getFromStorage("mainidea");
+  let tt2 = getFromStorage("tt2");
+  // let tt2 = getFromStorage("mainideatags");
+  let tt3_mi = getFromStorage("tt2");
   let tt3_syn = getFromStorage("synonymtags");
   let tt3_peo = getFromStorage("peopletags");
   let tt3_pla = getFromStorage("placetags");
   let tt3_dat = getFromStorage("datetags");
+  let tt3_msc = getFromStorage("misctags");
   let tt4 = getFromStorage("searchterms");
 
   if (!(tt1 && tt2 && tt3_mi && tt3_syn && tt3_peo && tt3_pla && tt3_dat && tt4)) {
@@ -187,11 +197,13 @@ let createPDF = () => {
   $('#coursename').text(cn || "");
 
   $('#pdf1 .pdfinsert').html(tt1);
-  $('#pdf2 .pdfinsert').html(tt2.map(mi => {
-    return `<span class='tag'>${mi}</span>`;
-  }));
+  // $('#pdf2 .pdfinsert').html(tt2.map(mi => {
+  //   return `<span class='tag'>${mi}</span>`;
+  // }));
 
-  $('#pdf-mainidea .pdfinsert').html(`<h2>${tt3_mi.text}</h2>`);
+  $('#pdf2 .pdfinsert').text(tt2);
+  // $('#pdf-mainidea .pdfinsert').html(`<h2>${tt3_mi.text}</h2>`);
+  $('#pdf-mainidea .pdfinsert').html(`<h2>${tt3_mi}</h2>`);
   $('#pdf-synonyms .pdfinsert').html(tt3_syn.map(tt => {
     return `<span class='tag'>${tt}</span>`;
   }));
@@ -202,6 +214,9 @@ let createPDF = () => {
     return `<span class='tag'>${tt}</span>`;
   }));
   $('#pdf-dates .pdfinsert').html(tt3_dat.map(tt => {
+    return `<span class='tag'>${tt}</span>`;
+  }));
+  $('#pdf-misc .pdfinsert').html(tt3_msc.map(tt => {
     return `<span class='tag'>${tt}</span>`;
   }));
 
@@ -218,34 +233,16 @@ let createPDF = () => {
     jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
   };
   
-  // if (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase())) {
-  //   html2pdf()
-  //   .set(opt)
-  //   .then(() => {
-  //     $('#pdf').show();
-  //   })
-  //   .from(element)
-  //   .outputPdf('datauristring')
-  //   .then(uri => {
-  //     let file = new Blob([uri], {type:"application/pdf"});
-  //     let url = URL.createObjectURL(file);
-  //     let a = $("main").append(`<a href="${url}" download="thinkingtool.pdf">Download PDF</a>`)
-  //   })
-  //   .then(() => {
-  //     $('#pdf').hide();
-  //   })
-  // } else {
-    html2pdf()
-    .set(opt)
-    .then(() => {
-      $('#pdf').show();
-    })
-    .from(element)
-    .save()
-    .then(() => {
-      $('#pdf').hide();
-    });
-  // }
+  html2pdf()
+  .set(opt)
+  .then(() => {
+    $('#pdf').show();
+  })
+  .from(element)
+  .save()
+  .then(() => {
+    $('#pdf').hide();
+  });
 }
 
 let closePDFInfoModal = () => {
@@ -266,10 +263,10 @@ $(document).ready(function() {
   /**
    * Set main idea in cloud from step 2 and save to storage
    */
-  // $("#tt2").on('input', function() {
-  //   $("#mainidea").text($(this).val());
-  //   saveToStorage("tt2", $(this).val());
-  // });
+  $("#tt2").on('input', function() {
+    $("#mainidea").text($(this).val());
+    saveToStorage("tt2", $(this).val());
+  });
 
   /**
    * React to start over button being clicked. Pop up warning.
@@ -301,18 +298,18 @@ $(document).ready(function() {
    * When user changes a list item, 
    * add to the corresponding space below it.
    */
-  $("#mainideas input").on('change', function() {
-    let pieces = $(this).val().split(",");
-    if (pieces.length > 2) {
-      pieces.map( (p) => {
-        addToList("mainideatags", p.trim());
-      })
-    } else {
-      addToList("mainideatags", $(this).val());
-    }
-    $(this).val("");
-    $(this).focus();
-  });
+  // $("#mainideas input").on('change', function() {
+  //   let pieces = $(this).val().split(",");
+  //   if (pieces.length > 2) {
+  //     pieces.map( (p) => {
+  //       addToList("mainideatags", p.trim());
+  //     })
+  //   } else {
+  //     addToList("mainideatags", $(this).val());
+  //   }
+  //   $(this).val("");
+  //   $(this).focus();
+  // });
 
   $('.field.has-addons .control .button').on('click', function() {
     $(this).parent().siblings('.control').find('input').focus();
@@ -366,6 +363,18 @@ $(document).ready(function() {
     $(this).val("");
   });
 
+  $("#misc input").on('change', function() {
+    let pieces = $(this).val().split(",");
+    if (pieces.length > 2) {
+      pieces.map( (p) => {
+        addToList("misctags", p.trim());
+      })
+    } else {
+      addToList("misctags", $(this).val());
+    }
+    $(this).val("");
+  });
+
   /**
    * Allows removal of an item once added.
    * Modals used to confirm deletion.
@@ -393,14 +402,14 @@ $(document).ready(function() {
   /**
    * Add a main idea tag to Step 3 when clicked.
    */
-  $(".mi-tags").on('click', '.list-item-data', function() {
-    let data = $(this).text();
-    let origid = $(this).closest('.control').attr('id');
-    $('#mainidea').text(data);
-    $('#mainidea').attr('data-origid', origid);
-    saveToStorage("mainidea", {id: origid, text: data});
-    disableMITag($(this));
-  });
+  // $(".mi-tags").on('click', '.list-item-data', function() {
+  //   let data = $(this).text();
+  //   let origid = $(this).closest('.control').attr('id');
+  //   $('#mainidea').text(data);
+  //   $('#mainidea').attr('data-origid', origid);
+  //   saveToStorage("mainidea", {id: origid, text: data});
+  //   disableMITag($(this));
+  // });
 
   /**
    * Add brainstorm items to search terms when clicked.
@@ -462,7 +471,8 @@ $(document).ready(function() {
    * Stop user from completing Step 3 prior to 1 & 2 being finished.
    */
   $(".panel-block input").on('focus', function() {
-    let steps12Complete = ($("#tt1").val() && $("#mainidea").text() !== MI_PLACEHOLDER);
+    // let steps12Complete = ($("#tt1").val() && $("#mainidea").text() !== MI_PLACEHOLDER);
+    let steps12Complete = ($("#tt1").val() && $("#tt2").val() !== MI_PLACEHOLDER);
     if (steps12Complete) {
       return;
     } else {
