@@ -83,7 +83,7 @@ html {
 }
 
 .pdfblock .pdfrow .pdfblock > div {
-  min-height: 1.25in;
+  min-height: 1in;
 }
 
 .pdfrow > div {
@@ -126,7 +126,7 @@ html {
 .pdfblock > div {
   border: 1px solid #000;
   border-radius: .5em;
-  min-height: 1.5in;
+  min-height: 1.25in;
 }
 
 #pdf-mainidea {
