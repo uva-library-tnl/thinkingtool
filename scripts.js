@@ -144,7 +144,7 @@ const prepPDF = () => {
   $('#coursenamefield').val(cn || '');
 };
 
-const createPDF = () => {
+const createPDF = (combined = false) => {
   const tt1 = getFromStorage('tt1');
   const tt2 = getFromStorage('tt2');
   const tt3MI = getFromStorage('tt2');
@@ -155,7 +155,7 @@ const createPDF = () => {
   const tt3Msc = getFromStorage('misctags');
   const tt4 = getFromStorage('searchterms');
 
-  if (!(tt1 && tt2 && tt3MI && tt3Syn && tt3Peo && tt3Pla && tt3Dat && tt4)) {
+  if (!combined && !(tt1 && tt2 && tt3MI && tt3Syn && tt3Peo && tt3Pla && tt3Dat && tt4)) {
     bulmaToast.toast({
       message: "You haven't completed all the steps.",
       type: 'is-danger',
@@ -163,7 +163,15 @@ const createPDF = () => {
       position: 'center',
       animate: { in: 'fadeIn', out: 'fadeOut' }
     });
-
+    return;
+  } else if (!(tt1 && tt2 && tt3Msc && tt4)) { // combined version
+    bulmaToast.toast({
+      message: "You haven't completed all the steps.",
+      type: 'is-danger',
+      duration: 3000,
+      position: 'center',
+      animate: { in: 'fadeIn', out: 'fadeOut' }
+    });
     return;
   }
 
@@ -176,18 +184,21 @@ const createPDF = () => {
   $('#pdf1 .pdfinsert').html(tt1);
   $('#pdf2 .pdfinsert').text(tt2);
   $('#pdf-mainidea .pdfinsert').html(`<h2>${tt3MI}</h2>`);
-  $('#pdf-synonyms .pdfinsert').html(tt3Syn.map(tt => {
-    return `<span class='tag'>${tt}</span>`;
-  }));
-  $('#pdf-people .pdfinsert').html(tt3Peo.map(tt => {
-    return `<span class='tag'>${tt}</span>`;
-  }));
-  $('#pdf-places .pdfinsert').html(tt3Pla.map(tt => {
-    return `<span class='tag'>${tt}</span>`;
-  }));
-  $('#pdf-dates .pdfinsert').html(tt3Dat.map(tt => {
-    return `<span class='tag'>${tt}</span>`;
-  }));
+
+  if (!combined) {
+    $('#pdf-synonyms .pdfinsert').html(tt3Syn.map(tt => {
+      return `<span class='tag'>${tt}</span>`;
+    }));
+    $('#pdf-people .pdfinsert').html(tt3Peo.map(tt => {
+      return `<span class='tag'>${tt}</span>`;
+    }));
+    $('#pdf-places .pdfinsert').html(tt3Pla.map(tt => {
+      return `<span class='tag'>${tt}</span>`;
+    }));
+    $('#pdf-dates .pdfinsert').html(tt3Dat.map(tt => {
+      return `<span class='tag'>${tt}</span>`;
+    }));
+  }
   $('#pdf-misc .pdfinsert').html(tt3Msc.map(tt => {
     return `<span class='tag'>${tt}</span>`;
   }));
@@ -437,7 +448,11 @@ $(document).ready(function () {
     saveToStorage('studentname', sn);
     saveToStorage('coursename', cn);
     closePDFInfoModal();
-    createPDF();
+    if (window.location.pathname.includes('combined')) {
+      createPDF(true);
+    } else {
+      createPDF();
+    }
   });
 
   $('#pdfinfo-cancel').on('click', function () {

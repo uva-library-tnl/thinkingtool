@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="static/bulma.min.css">
-  <link rel="stylesheet" href="static/animate.min.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../static/bulma.min.css">
+  <link rel="stylesheet" href="../static/animate.min.css">
+  <link rel="stylesheet" href="../style.css">
   <title>UVA Library Online Thinking Tool</title>
 </head>
 <body>
@@ -83,107 +83,11 @@
                   </div>
                 </div>
               </div>
-              <div class="tile">
-                <div class="tile is-parent">
-                  <div class="tile is-child panel" id="synonyms">
-                    <p class="panel-heading">Synonyms &amp; Related Concepts</p>
-                    <div class="panel-block">
-                      <p>List words similar to those in your main idea.  Think of words that experts tend to use or about topics related in any way to your idea.</p>
-                    </div>
-                    <div class="panel-block">
-                      <div class="field has-addons">
-                        <div class="control">
-                          <input type="text" class="input" placeholder="Enter a word or phrase to add">
-                        </div>
-                        <div class="control">
-                          <a class="button is-info">Add</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="panel-block">
-                      <div class="tt-tags field is-grouped is-grouped-multiline" id="synonymtags">
- 
-                      </div>        
-                    </div>
-                  </div>
-                </div>
-                <div class="tile is-parent">
-                  <div class="tile is-child panel" id="people">
-                    <p class="panel-heading">People</p>
-                    <div class="panel-block">
-                      <p>List the people who are involved. Think about the kinds of people or larger groups/organizations.</p>
-                    </div>
-                    <div class="panel-block">
-                      <div class="field has-addons">
-                        <div class="control">
-                          <input type="text" class="input" placeholder="Enter a word or phrase to add">
-                        </div>
-                        <div class="control">
-                          <a class="button is-info">Add</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="panel-block">
-                      <div class="tt-tags field is-grouped is-grouped-multiline" id="peopletags">
- 
-                      </div>        
-                    </div>  
-                  </div>
-                </div>
-              </div>
-              <div class="tile">
-                <div class="tile is-parent">
-                  <div class="tile is-child panel" id="places">
-                    <p class="panel-heading">Places</p>
-                    <div class="panel-block">
-                      <p>List words or phrases descriptive of places significant to your topic.</p>
-                    </div>
-                    <div class="panel-block">
-                      <div class="field has-addons">
-                        <div class="control">
-                          <input type="text" class="input" placeholder="Enter a word or phrase to add">
-                        </div>
-                        <div class="control">
-                          <a class="button is-info">Add</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="panel-block">
-                      <div class="tt-tags field is-grouped is-grouped-multiline" id="placetags">
- 
-                      </div>        
-                    </div>
-                  </div>
-                </div>
-                <div class="tile is-parent">
-                  <div class="tile is-child panel" id="dates">
-                    <p class="panel-heading">Dates</p>
-                    <div class="panel-block">
-                      <p>List words or phrases for dates, times, or periods related to your topic.</p>
-                    </div>
-                    <div class="panel-block">
-                      <div class="field has-addons">
-                        <div class="control">
-                          <input type="text" class="input" placeholder="Enter a word or phrase to add">
-                        </div>
-                        <div class="control">
-                          <a class="button is-info">Add</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="panel-block">
-                      <div class="tt-tags field is-grouped is-grouped-multiline" id="datetags">
- 
-                      </div>        
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div class="tile is-parent">
                 <div class="tile is-child panel" id="misc">
                   <p class="panel-heading">What comes to mind?</p>
                   <div class="panel-block">
-                    <p>List words or phrases that don't easily fit the categories above</p>
+                    <p>List words or phrases that are synonyms and related concepts, people, places, dates, or anything else you can think of.</p>
                   </div>
                   <div class="panel-block">
                     <div class="field has-addons">
@@ -282,7 +186,7 @@
       <p>
         The website content is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
       </p>
-      <img src="assets/by-nc-sa.svg" alt="CC by NC SA 4.0">
+      <img src="../assets/by-nc-sa.svg" alt="CC by NC SA 4.0">
     </div>
   </footer>
   <div class="modal" id="startover-modal">
@@ -397,34 +301,8 @@
           <p>Write down anything related to your main idea. Anything! Everything! (Use Wikipedia for help here).</p>
         </header>
         <div class="pdfrow">
-          <div id="pdf-synonyms" class="pdfblock">
-            <h3>Synonyms? Words experts use? Related concepts?</h3>
-            <div class="pdfinsert tags"></div>
-          </div>
-          <div id="pdf-people" class="pdfblock">
-            <h3>People? Kinds of people? Organizations?</h3>
-            <div class="pdfinsert tags"></div>
-          </div>
-        </div>
-        <div class="pdfrow">
-          <div id="pdf-mainidea" class="pdfblock">
-            <h3>Your Main Idea</h3>
-            <div class="pdfinsert"></div>
-          </div>
-        </div>
-        <div class="pdfrow">
-          <div id="pdf-places" class="pdfblock">
-            <h3>Places?</h3>
-            <div class="pdfinsert tags"></div>
-          </div>
-          <div id="pdf-dates" class="pdfblock">
-            <h3>Dates?</h3>
-            <div class="pdfinsert tags"></div>
-          </div>
-        </div>
-        <div class="pdfrow">
-          <div id="pdf-misc" class="pdfblock">
-            <h3>What comes to mind? Anything that doesn't easily fit the categories above?</h3>
+          <div id="pdf-misc" class="pdfblock combined">
+            <h3>List words or phrases that are synonyms and related concepts, people, places, dates, or anything else you can think of.</h3>
             <div class="pdfinsert tags"></div>
           </div>
         </div>
@@ -440,10 +318,10 @@
       <p>2-4 keywords from Box 3. Remember: Add or subtract keywords to get different results. Pick different ones! Start with a new main idea!</p>
     </div>
   </div>
-  <script src="static/jquery.min.js"></script>
+  <script src="../static/jquery.min.js"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-  <script src="static/bulma-toast.min.js"></script>
-  <script src="static/html2pdf.bundle.min.js"></script>
-  <script src="scripts.js"></script>
+  <script src="../static/bulma-toast.min.js"></script>
+  <script src="../static/html2pdf.bundle.min.js"></script>
+  <script src="../scripts.js"></script>
 </body>
 </html>

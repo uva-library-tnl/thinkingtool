@@ -129,6 +129,10 @@ html {
   min-height: 1.25in;
 }
 
+.pdfblock.combined > div {
+  min-height: 5in !important;
+}
+
 #pdf-mainidea {
   width: 50%;
   margin: .15in auto;
